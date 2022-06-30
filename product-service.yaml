@@ -9,3 +9,9 @@ eureka:
       default-zone: http://localhost:8082/eureka
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dbmetodos
+  jpa:
+    hibernate.ddl-auto: update
