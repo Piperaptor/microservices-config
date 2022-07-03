@@ -19,3 +19,8 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/producto/**
+      routes:
+        - id: calcularnuevosprecios-service
+          uri: lb://calcularnuevosprecios-service
+          predicates:
+            - Path=/calculo/**
