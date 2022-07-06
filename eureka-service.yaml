@@ -1,8 +1,41 @@
-server:
-  port: 8761
-eureka:
-  client:
-    fetch-registry: false
-    register-with-eureka: false
-    service-url: 
-      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: eurekaserver
+  namespace: metodos
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: eurekaserver
+  template: 
+    metadata: 
+      labels: 
+        app: eurekaserver
+        name: eurekaserver
+    spec: 
+      containers: 
+        - image: famesticausach/eurekaserver:latest
+          imagePullPolicy: Always
+          name: eurekaserver-container
+          ports: 
+            - containerPort: 8761
+      imagePullSecrets:
+         - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: eurekaserver-service
+    namespace: metodos
+spec:
+    type: NodePort
+    selector:
+        app: eurekaserver
+    ports:
+        - protocol: TCP
+          port: 8761
+          targetport: 8761
